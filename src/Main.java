@@ -17,6 +17,7 @@ public class Main {
     public static List<Album> list1 = new ArrayList<Album>();
     public static List<Album> list2 = new ArrayList<Album>();
     private static HttpURLConnection connection;
+    public static final String stringUrl = "https://jsonplaceholder.typicode.com/albums";
     public static int count =0;
     public static void Ex1(){
         //Method 1: java.net.HttpURLConnection
@@ -24,7 +25,7 @@ public class Main {
         String line;
         StringBuffer responseContent = new StringBuffer();
         try {
-            URL url = new URL("https://jsonplaceholder.typicode.com/albums");
+            URL url = new URL(stringUrl);
             connection = (HttpURLConnection) url.openConnection();
 
             connection.setRequestMethod("GET");
@@ -73,7 +74,7 @@ public class Main {
     public static void Ex2(){
         //Method 2: java.lang.http.HttpClient
         HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder().uri(URI.create("https://jsonplaceholder.typicode.com/albums")).build();
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(stringUrl)).build();
         client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
                 .thenApply(HttpResponse::body)
                 .thenAccept(Main::parse)
